@@ -1,0 +1,140 @@
+/**
+ * Scrollytelling CSS
+ * Based on lasr-web structure
+ */
+
+/* Font families */
+body {
+    font-family: 'Noto Sans', sans-serif;
+}
+
+.publication-title, h1, h2, h3, h4, h5, h6 {
+    font-family: 'Google Sans', sans-serif;
+}
+
+/* Step styling */
+.step {
+    margin: 0 auto 2rem auto;
+    padding: 1.5rem;
+    background-color: #ffffff;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Active step highlighting */
+.step.is-active {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+/* Article column */
+.article {
+    padding: 2rem;
+}
+
+/* Figure/Image/Video positioning - only for scrollytelling sections */
+#section2 img:not(.code-snippet),
+#section2 video {
+    position: sticky;
+    width: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 0;
+}
+
+/* Code snippet images - larger size, preserve aspect ratio */
+.code-snippet {
+    width: 90% !important;
+    height: auto !important;
+    max-width: 600px;
+    margin-top: 2.5rem;
+    position: static !important;
+    transform: none !important;
+    display: block;
+    border: 2px solid #555555;
+    border-radius: 8px;
+    padding: 4px;
+}
+
+/* Static section images - normal positioning */
+.is-vcentered img,
+.is-vcentered video {
+    width: 100%;
+}
+
+/* Hero figure - not sticky */
+.hero-figure img {
+    position: static;
+    transform: none;
+}
+
+/* Mobile corrections */
+@media screen and (max-width: 768px) {
+    img.underlay {
+        z-index: -1;
+        opacity: 0.3;
+    }
+
+    .step-background {
+        background-color: white;
+        padding: 1rem;
+        border-radius: 8px;
+    }
+
+    .article {
+        max-width: 100%;
+    }
+}
+
+/* Ensure smooth scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Add some spacing for scrollytelling sections */
+.columns#section1,
+.columns#section2 {
+    min-height: 100vh;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+}
+
+/* Reduce container padding */
+.container.is-fullhd {
+    max-width: 100%;
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+
+/* Reduce section padding */
+.section {
+    padding: 2rem 0;
+}
+
+/* Rounded buttons */
+.button {
+    border-radius: 25px;
+}
+
+/* Author links styling */
+.author-link {
+    color: #4478e8;
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+}
+
+.author-link:hover {
+    opacity: 0.8;
+    text-decoration: underline;
+}
+
+/* PyTorch orange buttons */
+.pytorch-button {
+    background-color: #4478e8;
+    color: white;
+    border: none;
+}
+
+.pytorch-button:hover {
+    background-color: #5a88ea;
+    color: white;
+}

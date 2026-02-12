@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SymTorch: A PyTorch Framework for Symbolic Distillation of Deep Neural Networks</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="static/symtorch_favicon.png">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Bulma CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="static/css/scrollytelling.css">
+
+    <!-- KaTeX for LaTeX math rendering -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+        onload="renderMathInElement(document.body);"></script>
+</head>
+<body>
+    <!-- Header Section -->
+    <section class="hero is-small">
+        <div class="hero-body" style="padding-top: 2rem; padding-bottom: 1rem;">
+            <div class="container has-text-centered">
+                <h1 class="title is-1 publication-title" style="margin-bottom: 1rem;">
+                    <img src="static/symtorch_logo.svg" alt="SymTorch" style="max-height: 150px; width: auto;">
+                </h1>
+                <h2 class="subtitle is-3" style="margin-bottom: 1rem;">
+                    A PyTorch Framework for Symbolic Distillation of Deep Neural Networks
+                </h2>
+                <p class="subtitle is-5" style="margin-bottom: 0.5rem;">
+                    <a href="https://lizlizliz.xyz" class="author-link">Elizabeth S.Z. Tan</a>, <a href="https://nlp.rip/" class="author-link">Adil Soubki</a>, <a href="https://astroautomata.com/#team" class="author-link">Miles Cranmer</a>
+                </p>
+                <p class="subtitle is-5" style="margin-bottom: 0.5rem; color: #666;">
+                    University of Cambridge
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Buttons Section -->
+    <section class="section" style="padding-top: 0rem; padding-bottom: 0.5rem;">
+        <div class="container">
+            <div class="buttons is-centered">
+                <a class="button is-medium pytorch-button" href="https://github.com/elizabethsztan/SymTorch" target="_blank">
+                    <span class="icon">
+                        <i class="fab fa-github"></i>
+                    </span>
+                    <span>GitHub</span>
+                </a>
+                <a class="button is-medium pytorch-button" href="path/to/paper.pdf" target="_blank">
+                    <span class="icon">
+                        <i class="fas fa-file-pdf"></i>
+                    </span>
+                    <span>Paper</span>
+                </a>
+                <a class="button is-medium pytorch-button" href="https://symtorch.readthedocs.io/en/latest/" target="_blank">
+                    <span class="icon">
+                        <i class="fas fa-book"></i>
+                    </span>
+                    <span>Documentation</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hero Figure Section -->
+    <section class="section hero-figure" style="padding-top: 0.5rem; padding-bottom: 2rem;">
+        <div class="container">
+            <div class="has-text-centered">
+                <figure class="image is-inline-block">
+                    <img src="static/figure1.svg" alt="Figure 1" style="max-width: 1100px; width: 100%;">
+                    <figcaption style="margin-top: 1rem; font-size: 1rem; color: #666; max-width: 1100px; margin-left: auto; margin-right: auto; text-align: justify;">
+                        For a trained PyTorch model, <span style="color: #4478e8;">SymTorch</span> wraps around any NN component in the model.
+                        The user passes in sample data and in the forward pass, the inputs and outputs (I/O) of the component are collected.
+                        Using <a href="https://astroautomata.com/PySR/v1.5.9/">PySR</a>, SymTorch performs a SR on the I/O to produce the best expressions approximating the behavior of the NN at different levels of complexity.
+                        Optionally, the user can select an equation from the Pareto front and replace the component with this chosen equation in the forward pass producing
+                        a hybrid neural-symbolic model.
+                    </figcaption>
+                </figure>
+            </div>
+        </div>
+    </section>
+
+    <!-- Abstract Section -->
+    <section class="section" style="padding-top: 3rem; padding-bottom: 10rem;">
+        <div class="container" style="max-width: 800px;">
+            <div class="content has-text-centered">
+                <h2>Abstract</h2>
+                <p style="text-align: justify; overflow: visible; height: auto;">
+                Symbolic distillation builds interpretable models in the form of closed-form mathematical expressions. This approach has shown promise in discovering physical laws and mathematical relationships directly from trained deep learning models, yet adoption remains limited due to the engineering barrier of integrating symbolic regression into deep learning workflows.
+                <br>
+                <br>
+                We introduce SymTorch, a library that automates this integration by wrapping neural network components, collecting their input-output behavior, and distilling them into human-readable equations via PySR. SymTorch handles the engineering challenges that have hindered adoption: GPU-CPU data transfer, input-output caching, model serialization, and seamless switching between neural and symbolic forward passes.
+                <br>
+                <br>
+                We demonstrate SymTorch across diverse architectures including GNNs, PINNs and transformer models. Finally, we present a proof-of-concept for accelerating LLM inference by replacing MLP layers with symbolic surrogates, achieving an 8.3% throughput improvement with moderate performance degradation.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <section class="section">
+        <div class="container is-fullhd">
+
+
+            <!-- Section 1: Model Interpretability -->
+            <div class="columns is-vcentered">
+                <div class="column is-max-mobile is-max-tablet is-max-desktop is-max-widescreen article">
+                    <h3 class="title is-size-6-mobile is-size-4-tablet">Model Interpretability</h3>
+                    <div class="content is-size-7-mobile is-size-6-tablet has-text-left">
+                        <p style="text-align: justify">
+                            Deep learning models excel at analyzing large datasets, but because of the highly-parameterized nature of neural networks, they remain largely uninterpretable.
+                            This has spurred extensive research into explainable AI.
+                        </p>
+                        <p style="text-align: justify">
+                            One promising direction is <b>mechanistic interpretability</b>, which focuses on identifying circuits, neurons, and activation dimensions within specific model architectures.
+                            These methods enable researchers to identify <i><b>which</b></i> components or dimensions matter for specific behaviors or concepts.
+                        </p>
+                    </div>
+                </div>
+                <div class="column content">
+                    <img src="static/frames/1.svg" loading="eager" alt="Model Interpretability">
+                </div>
+            </div>
+
+            <!-- Section 2: Symbolic Interpretability -->
+            <div class="columns is-vcentered">
+                <div class="column is-max-mobile is-max-tablet is-max-desktop is-max-widescreen article">
+                    <h3 class="title is-size-6-mobile is-size-4-tablet">Symbolic Interpretability</h3>
+                    <div class="content is-size-7-mobile is-size-6-tablet has-text-left">
+                        <p style="text-align: justify">
+                            SymTorch addresses a complementary question: <b><i>what function</i></b> does a component compute? In doing so, we provide a more holistic approach to model interpretability.
+                        </p>
+                        <h5>Inspired by Physics</h5>
+                        <p style="text-align: justify">
+                            In physics, interpretability means using concise equations that reliably explain phenomena. These equations are written in the language of mathematical operators and variables whose physical effects are understood.
+                            Equations have the benefit over dense neural networks as they enable direct inspection of input-output mappings and analysis of how input variations affect outputs, including in out-of-distribution settings.
+                            They also have the capacity to be computationally quicker than neural networks.
+                        </p>
+                    </div>
+                </div>
+                <div class="column content">
+                    <img src="static/frames/2.svg" loading="eager" alt="Symbolic Interpretability">
+                </div>
+            </div>
+
+            <!-- Section 3: Symbolic Regression -->
+            <div class="columns is-vcentered">
+                <div class="column is-max-mobile is-max-tablet is-max-desktop is-max-widescreen article">
+                    <h3 class="title is-size-6-mobile is-size-4-tablet">Symbolic Regression</h3>
+                    <div class="content is-size-7-mobile is-size-6-tablet has-text-left">
+                        <p style="text-align: justify">
+                            We use symbolic regression to distill NN components into human-readable mathematical formulas. Symbolic distillation provides architecture-agnostic interpretability by approximating component behavior with closed-form expressions.
+                            We leverage genetic algorithms through <a href="https://astroautomata.com/PySR/v1.5.9/">PySR</a> to perform the symbolic regression.
+                        </p>
+                    </div>
+                </div>
+                <div class="column content">
+                    <video src="static/frames/3.webm" autoplay loop muted playsinline></video>
+                </div>
+            </div>
+
+            <!-- Middle Content -->
+            <div class="content" style ="padding-top: 3rem; padding-bottom: 10rem;">
+                <h2> <span style="color: #4478e8;">SymTorch</span>: A PyTorch Framework for Symbolic Distillation of Neural Networks</h2>
+                <p> A quick overview of how to use SymTorch.
+                </p>
+            </div>
+
+            <!-- Scrollytelling Section 2 -->
+            <div class="columns is-centered is-gapless" id="section2">
+                <div class="column is-7 content">
+                    <img src="static/frames2/2.svg" id="updateableFigure2" loading="eager" alt="Visualization">
+                    <video id="updateableVideo2" src="static/frames2/1.webm" autoplay muted playsinline></video>
+                </div>
+                <div class="column is-5 article">
+                    <div class="content step">
+                        <h3>1. Model Selection</h3>
+                        <p style="text-align: justify">Choose any trained PyTorch model we want to analyze.
+                        <br>
+                        <br>
+                        Python callable functions are also acceptable provided they form a mapping \( \mathbf{x}\in \mathbb{R}^{D_I} \rightarrow \mathbf{y}\in \mathbb{R}^{D_O}\). </p>
+                        <img src="static/code_snippets2/1.png" alt="Code snippet 1" class="code-snippet">
+                    </div>
+                    <div class="content step">
+                        <h3>2. Wrap Model Component</h3>
+                        <p style="text-align: justify">Select the specific model component, which we call a <span style="color: #4478e8;"><i>block</i></span>, whose input-output behaviour we want to approximate using symbolic regression.
+                            <br>
+                            <br>
+                            Wrap this component with SymTorch.</p>
+                        <img src="static/code_snippets2/2.png" alt="Code snippet 2" class="code-snippet">
+                    </div>
+                    <div class="content step">
+                        <h3>3. Symbolic Distillation with PySR</h3>
+                        <p style="text-align: justify">Pass in sample data to the model. SymTorch collects input-output activations of the wrapped block and performs symbolic distillation with
+                            <a href="https://astroautomata.com/PySR/v1.5.9/">PySR</a> to discover the best closed-form analytic equations approximating the behavior of the block. </p>
+                        <img src="static/code_snippets2/3.png" alt="Code snippet 3" class="code-snippet">
+                    </div>
+                    <div class="content step">
+                        <h3>4. Output Pareto Front of Equations</h3>
+                        <p style="text-align: justify">The symbolic distillation results in a Pareto Front of equations - the most accurate equation for each level of complexity.
+                            <br>
+                            <br>
+                            The best equation is chosen to be the one that maximizes the fractional drop in log mean absolute error relative to an increase in equation complexity.
+                            Specifically, the equation that maximizes the score;
+                            $$ \text{score} = -\frac{\log (\text{loss}_i/\text{loss}_{i-1})}{\text{complexity}_i-\text{complexity}_{i-1}}$$
+                            But we can choose whichever equation from the Pareto Front that best fits our analyses.
+                        </p>
+                        <img src="static/code_snippets2/4.png" alt="Code snippet 4" class="code-snippet">
+                    </div>
+                    <div class="content step">
+                        <h3>5. Neuro-Symbolic Hybrid Model</h3>
+                        <p style="text-align: justify"> Optionally, we can replace the original block so that in the forward pass of the full model, we use the symbolic expression instead.
+                            <br>
+                            <br>
+                            Gradients flow through the symbolic expressions, allowing the remaining neural components to continue updating during training while the model operates in symbolic mode.
+                            <br>
+                            <br>
+                            We can seamlessly switch back to using the original block in the forward pass.
+                        </p>
+                        <img src="static/code_snippets2/5.png" alt="Code snippet 5" class="code-snippet">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Conclusion -->
+            <div class="content">
+                <h2>Conclusion</h2>
+                <p>
+                    Summary of your work and key takeaways.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="content has-text-centered">
+            <p>
+                <strong><span style="color: #4478e8;">SymTorch</span>: A PyTorch Framework for Symbolic Distillation of Deep Neural Networks</strong> by Elizabeth S.Z. Tan, Adil Soubki & Miles Cranmer.
+            </p>
+        </div>
+    </footer>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="static/scrollama.js"></script>
+    <script src="static/js/scrollytelling.js"></script>
+
+    <!-- Initialize Scrollytelling -->
+    <script>
+        // Initialize scrollytelling section
+        init("#section2");
+    </script>
+</body>
+</html>
