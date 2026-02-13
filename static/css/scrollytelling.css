@@ -33,7 +33,9 @@ body {
 
 /* Figure/Image/Video positioning - only for scrollytelling sections */
 #section2 img:not(.code-snippet),
-#section2 video {
+#section2 video,
+#section3 img:not(.code-snippet),
+#section3 video {
     position: sticky;
     width: 100%;
     top: 50%;
@@ -92,7 +94,8 @@ html {
 
 /* Add some spacing for scrollytelling sections */
 .columns#section1,
-.columns#section2 {
+.columns#section2,
+.columns#section3 {
     min-height: 100vh;
     margin-top: 3rem;
     margin-bottom: 3rem;

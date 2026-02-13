@@ -327,6 +327,83 @@
             </div>
 
 
+            <!-- SLIME section -->
+            <div class="content" style ="padding-top: 3rem; padding-bottom: 15rem;">
+                <h2>Explainable AI with SymTorch: Supra-Local Interpretable Model-Agnostic Explanations (<span style="color: #4478e8;">SLIME</span>)</h2>
+                <p> A method developed by <a href="https://dl.acm.org/doi/10.1145/3712255.3726721">Fong & Motani (2025)</a> to explain black box model outputs in a local region - the symbolic extension to the popular <a href="https://dl.acm.org/doi/10.1145/3712255.3726721">LIME</a>. 
+                <br>
+                <br>
+                SymTorch provides a native implementation of this explainability method.
+                </p>
+            </div>
+
+            <!-- Scrollytelling Section 3 -->
+            <div class="columns is-centered is-gapless" id="section3">
+                <div class="column is-7 content">
+                    <img src="static/frames3_5/1.svg" id="updateableFigure3" loading="eager" alt="Visualization">
+                    <!-- <video id="updateableVideo3" src="static/frames3_5/1.webm" autoplay muted playsinline></video> -->
+                </div>
+                <div class="column is-5 article">
+                    <div class="content step">
+                        <h3>1. Choose a Black Box Model</h3>
+                        <p style="text-align: justify">Pick the trained model you want to understand.
+                            <br>
+                            <br>
+                            This can be any neural network or predictive system whose behaviour you want to inspect.
+                        </p>
+                        <img src="static/code_snippets3_5/1.png" alt="Code snippet 1" class="code-snippet">
+                    </div>
+                    <div class="content step">
+                        <h3>2. Select a Point to Explain</h3>
+                        <p style="text-align: justify"> Choose a specific input example you care about.
+                            This is the exact data point where you want to understand how the model is behaving.
+
+                        </p>
+                        <img src="static/code_snippets3_5/2.png" alt="Code snippet 2" class="code-snippet">
+                    </div>
+                    <div class="content step">
+                        <h3>3. Decide How Local You Want the Explanation</h3>
+                        <p style="text-align: justify">
+                            Choose how far around that point you want to look.
+                            We do this by inputting sample data and choosing the \(J\)-nearest neighbors around the point of interest.
+                            <br>
+                            <br>
+                            A small neighbourhood explains behaviour very close to the chosen example (small \(J\)). A larger neighbourhood captures more general behaviour around it (large \(J\)).
+                        </p>
+                        <img src="static/code_snippets3_5/3.png" alt="Code snippet 3" class="code-snippet">
+                    </div>
+                    <div class="content step">
+                        <h3>4. Augment with Synthetic Data</h3>
+                        <p style="text-align: justify">Generate additional data points around the chosen input. These synthetic samples help probe how the model behaves locally by slightly perturbing the original input.
+                            Choose how many synthetic points to generate — more points give a richer picture, but increase computation.
+                        </p>
+                        <img src="static/code_snippets3_5/4.png" alt="Code snippet 4" class="code-snippet">
+                    </div>
+                    <div class="content step">
+                        <h3>5. Fit a Symbolic Model</h3>
+                        <p style="text-align: justify">
+                            Run symbolic regression on the combined dataset (real data consisting of the \(J\)-nearest neighbors + synthetic samples).
+                            <br>
+                            <br>
+                            This produces a simple, human-readable equation that approximates how the black-box model behaves in the selected region.
+                        </p>
+                        <img src="static/code_snippets3_5/5.png" alt="Code snippet 5" class="code-snippet">
+                    </div>
+                    <div class="content step">
+                        <h3>Explainability with SLIME</h3>
+                        <p style="text-align: justify">
+                            SLIME turns black-box behaviour into an interpretable local equation:
+                        </p>
+                        <ul>
+                            <li>Understand how the model behaves around a selected input.</li>
+                            <li>Compare behaviour inside the training distribution vs. out-of-distribution.</li>
+                            <li>Identify which variables drive the prediction locally.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+
             <!-- LLM acceleration -->
             <div class="content" style="padding-top: 5rem; padding-bottom: 3rem;">
                 <h2>Exploratory LLM Acceleration Framework</h2>
@@ -434,8 +511,9 @@
 
     <!-- Initialize Scrollytelling -->
     <script>
-        // Initialize scrollytelling section
+        // Initialize scrollytelling sections
         init("#section2");
+        init("#section3");
     </script>
 </body>
 </html>
