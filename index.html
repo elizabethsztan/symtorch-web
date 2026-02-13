@@ -233,6 +233,17 @@
                         </p>
                         <img src="static/code_snippets2/5.png" alt="Code snippet 5" class="code-snippet">
                     </div>
+                    <div class="content step">
+                        <h3>SymTorch Advantage</h3>
+                        <p style="text-align: justify"> 
+                            SymTorch handles all of the engineering overhead, including;
+                        </p>
+                        <ul>
+                            <li><b>GPU-CPU data transfer</b>: data is transferred seamlessly between hardware.</li>
+                            <li><b>Input-output caching</b>: activations are cached so we can rerun the symbolic distillation step without recomputing a forward pass through the model.</li>
+                            <li><b>Model serialization</b>: SymTorch models work with PyTorch's native model saving and loading functionalities.</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
 
@@ -262,7 +273,9 @@
                     </div>
                 </div>
                 <div class="column content">
-                    <img src="static/frames3/1.png" loading="lazy" alt="Graph Neural Networks">
+                    <a href="https://arxiv.org/abs/2006.11287" target="_blank">
+                        <img src="static/frames3/1.png" loading="lazy" alt="Graph Neural Networks">
+                    </a>
                 </div>
             </div>
 
@@ -320,27 +333,85 @@
                 <p>We show an exploratory framework to increase the token throughput of a small LLM. SymTorch makes experiments that sit on the interface of deep learning and symbolic regression incredibly simple and straightforward.</p>
             </div>
 
-            <!-- Section 1: Graph Neural Networks -->
+            <!-- Section 1: The Problem -->
             <div class="columns is-vcentered">
                 <div class="column is-max-mobile is-max-tablet is-max-desktop is-max-widescreen article">
-                    <h3 class="title is-size-6-mobile is-size-4-tablet">Graph Neural Networks</h3>
+                    <h3 class="title is-size-6-mobile is-size-4-tablet">The Problem</h3>
                     <div class="content is-size-7-mobile is-size-6-tablet has-text-left">
                         <p style="text-align: justify">
-                            As a reproduction of the work by <a href="https://arxiv.org/abs/2006.11287">Cranmer et. al. (2020)</a>, we applied SymTorch to Graph Neural Networks trained on empirical N-body systems to discover the the true interaction forces between particles.
-
+                            A broad line of work aims to reduce overall inference cost and latency through techniques such as <a href="https://arxiv.org/abs/2208.07339">quantization</a>, <a href="https://arxiv.org/abs/2109.04838">pruning</a>, and <a href="https://arxiv.org/abs/2211.17192">speculative decoding</a>. Specifically, MLP layers constitute a substantial portion of transformer inference compute.
                         </p>
-                    </div>
-                    <div class="has-text-centered" style="margin-top: 1rem;">
-                        <a class="button is-medium pytorch-button" href="https://github.com/elizabethsztan/SymTorch_symbolic_distillation_GNNs" target="_blank">
-                            <span class="icon">
-                                <i class="fas fa-code"></i>
-                            </span>
-                            <span>Code</span>
-                        </a>
                     </div>
                 </div>
                 <div class="column content">
-                    <img src="static/frames3/1.png" loading="lazy" alt="Graph Neural Networks">
+                    <a href="https://magazine.sebastianraschka.com/p/the-big-llm-architecture-comparison" target="_blank">
+                        <img src="static/frames4/1.png" loading="lazy" alt="The Problem">
+                    </a>
+                </div>
+            </div>
+
+            <!-- Section 2: Our Solution -->
+            <div class="columns is-vcentered">
+                <div class="column is-max-mobile is-max-tablet is-max-desktop is-max-widescreen article">
+                    <h3 class="title is-size-6-mobile is-size-4-tablet">Our Solution</h3>
+                    <div class="content is-size-7-mobile is-size-6-tablet has-text-left">
+                        <p style="text-align: justify">
+                            We explore a new approach to decreasing inference compute in transformers: replacing Multi-Layer Perceptron (MLP) layers with symbolic expressions via SymTorch.
+                        </p>
+                        <h5>Method</h5>
+                        <p style="text-align: justify">
+                            SymTorch discovers the best equations mapping inputs to each output dimension. For wide neural networks, we need to make the symbolic distillation step more tractable by reducing the number of input and output dimensions.
+                            We do this dimensionality reduction step via Principle Component Analysis.
+                        </p>
+                        <h5>Setup</h5>
+                        <p style="text-align: justify">
+                            We use the small LLM <a href="https://huggingface.co/Qwen/Qwen2.5-1.5B-Instruct">Qwen2.5-1.5B-Instruct</a> for our experiment. We perform dimensionality reduction to the inputs/outputs of three MLP layers in this model and replace with
+                            symbolic expressions with SymTorch. To train and test performance, we use the <a href="https://huggingface.co/datasets/Salesforce/wikitext">Wikitext</a> dataset.
+                        </p>
+                    </div>
+                </div>
+                <div class="column content">
+                    <img src="static/frames4/2.png" loading="lazy" alt="Our Solution">
+                </div>
+            </div>
+
+            <!-- Section 3: Results -->
+            <div class="columns is-vcentered">
+                <div class="column is-max-mobile is-max-tablet is-max-desktop is-max-widescreen article">
+                    <h3 class="title is-size-6-mobile is-size-4-tablet">Results</h3>
+                    <div class="content is-size-7-mobile is-size-6-tablet has-text-left">
+                        <p style="text-align: justify">
+                            By replacing only three MLPs with symbolic expressions, we achieved a <b>8.3%</b> increase in token throughput.
+                            <br>
+                            <br>
+                            We observed a moderate increase in perplexity on the test set. However, this degradation was driven primarily by the dimensionality reduction stage rather than by the replacement of the MLP layers themselves.
+                            The graph on the right shows performance compared to similarly sized open-source LLMs.
+                        </p>
+                        <h5>Further Work</h5>
+                        <ul>
+                            <li><b>Improved dimensionality reduction</b>: we hope to further explore this technique but instead use a better dimensionality reduction method (e.g. linear projections).</li>
+                            <li><b>Cross-domain generalization</b>: currently, this framework is only tested on one data distribution. We should test if we can generalize across different domains.</li>
+                            <li><b>Framework optimization</b>: we want to explore which layers are most amenable to symbolic approximation and how many layers can be replaced to optimize performance. We further want to test this on larger LLMs.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="column content">
+                    <img src="static/frames4/3.png" loading="lazy" alt="Results">
+                </div>
+            </div>
+
+            <!-- Section 4: Experimenting with SymTorch -->
+            <div class="columns is-vcentered">
+                <div class="column is-max-mobile is-max-tablet is-max-desktop is-max-widescreen article">
+                    <h3 class="title is-size-6-mobile is-size-4-tablet">Experimenting with SymTorch</h3>
+                    <div class="content is-size-7-mobile is-size-6-tablet has-text-left">
+                        <p style="text-align: justify">
+                            By presenting this framework, we aim to highlight how seamlessly SymTorch enables the integration of symbolic distillation with deep learning. Experiments that once required substantial custom engineering can now be performed with minimal overhead. By making symbolic distillation readily usable within modern architectures, SymTorch opens the door to more transparent, flexible, and creative exploration of deep learning systems.
+                        </p>
+                    </div>
+                </div>
+                <div class="column content">
+                    <img src="static/frames4/4.png" loading="lazy" alt="Experimenting with SymTorch">
                 </div>
             </div>
 
